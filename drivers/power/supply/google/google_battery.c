@@ -629,10 +629,9 @@ void dump_ssoc_state(struct batt_ssoc_state *ssoc_state, struct logbuffer *log)
 		  qnum_fracdgt(ssoc_state->ssoc_rl),
 		  ssoc_state->ssoc_curve_type,
 		  ssoc_uicurve_cstr(buff, sizeof(buff), ssoc_state->ssoc_curve),
-		  ssoc_state->rl_status);
+		  ssoc_state->rl_status);ssoc_state->rl_status);
 
 	logbuffer_log(log, "%s", ssoc_state->ssoc_state_cstr);
-	pr_debug("%s\n", ssoc_state->ssoc_state_cstr);
 }
 
 /* ------------------------------------------------------------------------- */
