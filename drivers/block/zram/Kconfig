@@ -66,4 +66,35 @@ config ZRAM_DEFAULT_BACKEND
 	default "z3fold" if DEFAULT_ZRAM_Z3FOLD
 	default "zsmalloc"
 
+choice
+	prompt "Default zRAM compressor"
+	default DEFAULT_ZRAM_LZO
+	help
+	  Select the compressor that will be used to compress pages
+	  for all zRAM devices.
+
+	config DEFAULT_ZRAM_LZO
+		bool "lzo"
+
+	config DEFAULT_ZRAM_LZ4
+		bool "lz4" if CRYPTO_LZ4=y
+
+	config DEFAULT_ZRAM_LZ4HC
+		bool "lz4hc" if CRYPTO_LZ4HC=y
+
+	config DEFAULT_ZRAM_842
+		bool "842" if CRYPTO_842=y
+
+	config DEFAULT_ZRAM_ZSTD
+		bool "zstd" if CRYPTO_ZSTD=y
+endchoice
+
+config ZRAM_DEFAULT_COMPRESSOR
+	string
+	default "lz4" if DEFAULT_ZRAM_LZ4
+	default "lz4hc" if DEFAULT_ZRAM_LZ4HC
+	default "842" if DEFAULT_ZRAM_842
+	default "zstd" if DEFAULT_ZRAM_ZSTD
+	default "lzo"
+
 endif
