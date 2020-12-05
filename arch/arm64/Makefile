@@ -49,6 +49,17 @@ $(warning Detected assembler with broken .inst; disassembly will be unreliable)
   endif
 endif
 
+ifeq ($(CONFIG_ARCH_LITO), y)
+ifeq ($(cc-name),clang)
+KBUILD_AFLAGS	+= -mcpu=cortex-a55 -mtune=cortex-a55
+KBUILD_CFLAGS	+= -mcpu=cortex-a55 -mtune=cortex-a55
+KBUILD_LDFLAGS	+= -mllvm -mcpu=cortex-a55
+else ifeq ($(cc-name),gcc)
+KBUILD_AFLAGS	+= -mcpu=cortex-a76.cortex-a55 -mtune=cortex-a75.cortex-a55
+KBUILD_CFLAGS	+= -mcpu=cortex-a76.cortex-a55 -mtune=cortex-a75.cortex-a55
+endif
+endif
+
 ifeq ($(cc-name),clang)
 KBUILD_CFLAGS	+= -mno-implicit-float
 else
