@@ -833,7 +833,11 @@ endif
 ifdef CONFIG_LTO_CLANG
 ifdef CONFIG_THINLTO
 lto-clang-flags	:= -flto=thin
+ifeq ($(LD),ld.lld)
 KBUILD_LDFLAGS	+= --thinlto-cache-dir=.thinlto-cache
+else
+KBUILD_LDFLAGS	+= --plugin-opt=cache-dir=.plugin-cache
+endif
 else
 lto-clang-flags	:= -flto
 endif
