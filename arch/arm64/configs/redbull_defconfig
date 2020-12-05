@@ -4,7 +4,7 @@
 #
 
 #
-# Compiler: Proton clang version 12.0.0 (https://github.com/llvm/llvm-project dcc06597b1d61d35c7246d3ab2d7a807134aaa45)
+# Compiler: Proton clang version 12.0.0 (https://github.com/llvm/llvm-project f502b14d40e751fe00afc493ef0d08f196524886)
 #
 CONFIG_GCC_VERSION=0
 CONFIG_CC_IS_CLANG=y
@@ -1409,6 +1409,7 @@ CONFIG_OF_BATTERYDATA=y
 # CONFIG_PARPORT is not set
 CONFIG_BLK_DEV=y
 # CONFIG_BLK_DEV_NULL_BLK is not set
+# CONFIG_ZRAM is not set
 CONFIG_BLK_DEV_LOOP=y
 CONFIG_BLK_DEV_LOOP_MIN_COUNT=0
 # CONFIG_BLK_DEV_CRYPTOLOOP is not set
