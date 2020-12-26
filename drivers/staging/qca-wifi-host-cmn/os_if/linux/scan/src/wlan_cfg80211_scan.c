@@ -441,17 +441,10 @@ int wlan_cfg80211_sched_scan_start(struct wlan_objmgr_vdev *vdev,
 
 	enable_dfs_pno_chnl_scan = ucfg_scan_is_dfs_chnl_scan_enabled(psoc);
 	if (request->n_channels) {
-		uint32_t buff_len;
-		char *chl;
+		char chl[(((NUM_24GHZ_CHANNELS + NUM_5GHZ_CHANNELS) * 5) + 1)];
 		int len = 0;
 		bool ap_or_go_present = wlan_cfg80211_is_ap_go_present(psoc);
 
-		buff_len = (request->n_channels * 5) + 1;
-		chl = qdf_mem_malloc(buff_len);
-		if (!chl) {
-			ret = -ENOMEM;
-			goto error;
-		}
 		for (i = 0; i < request->n_channels; i++) {
 			channel = request->channels[i]->hw_value;
 			if ((!enable_dfs_pno_chnl_scan) &&
@@ -472,20 +465,16 @@ int wlan_cfg80211_sched_scan_start(struct wlan_objmgr_vdev *vdev,
 								  &ok);
 				if (QDF_IS_STATUS_ERROR(status)) {
 					cfg80211_err("DNBS check failed");
-					qdf_mem_free(chl);
-					chl = NULL;
 					ret = -EINVAL;
 					goto error;
 				}
 				if (!ok)
 					continue;
 			}
-			len += qdf_scnprintf(chl + len, buff_len - len, " %d", channel);
+			len += qdf_scnprintf(chl + len, (((NUM_24GHZ_CHANNELS + NUM_5GHZ_CHANNELS) * 5) + 1) - len, " %d", channel);
 			valid_ch[num_chan++] = wlan_chan_to_freq(channel);
 		}
 		cfg80211_debug("Channel-List[%d]:%s", num_chan, chl);
-		qdf_mem_free(chl);
-		chl = NULL;
 		/* If all channels are DFS and dropped,
 		 * then ignore the PNO request
 		 */
